@@ -1,7 +1,7 @@
 require('dotenv').config()
 const { Client } = require('@notionhq/client')
 
-const { NOTION_API_KEY, NOTION_PLAYER_DB_ID } = process.env
+const { NOTION_API_KEY, NOTION_PLAYER_DB_ID, NOTION_SCORE_DB_ID } = process.env
 
 const notion = new Client({ auth: NOTION_API_KEY })
 
@@ -20,8 +20,6 @@ async function getPlayer(discordTag) {
       }
     }
   })
-
-  console.log('get player', response)
 
   return response
 }
@@ -54,7 +52,49 @@ async function createPlayer(name, discordTag) {
     }
   })
 
-  console.log('create player', response)
+  return response
+}
+
+async function addScore(player, { game, tries, position }) {
+  const response = await notion.pages.create({
+    parent: {
+      type: 'database_id',
+      database_id: NOTION_SCORE_DB_ID
+    },
+    properties: {
+      "0": {
+        title: [{
+          type: 'text',
+          text: {
+            content: ''
+          }
+        }]
+      },
+      "Joueur": {
+        relation: [
+          {
+            id: player.id
+          }
+        ]
+      },
+      "Tags": {
+        select: {
+          name: game
+        }
+      },
+      "Nombre de coups": {
+        number: tries
+      },
+      "Position": {
+        number: position || ''
+      },
+      "Date": {
+        date: {
+          start: new Date()
+        }
+      }
+    }
+  })
 
   return response
 }
@@ -62,5 +102,6 @@ async function createPlayer(name, discordTag) {
 module.exports = {
   getDatabase,
   getPlayer,
-  createPlayer
+  createPlayer,
+  addScore
 }
