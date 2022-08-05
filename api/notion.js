@@ -24,15 +24,21 @@ async function getPlayer(discordTag) {
   return response
 }
 
-async function createPlayer(name, discordTag) {
+async function createPlayer(name, discordTag, avatarURL) {
   const response = await notion.pages.create({
     parent: {
       type: 'database_id',
       database_id: NOTION_PLAYER_DB_ID
     },
-    "properties": {
+    icon: {
+      type: 'external',
+      external: {
+        url: avatarURL
+      }
+    },
+    properties: {
       "Nom": {
-        "title": [
+        title: [
           {
             text: {
               content: name
