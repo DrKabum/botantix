@@ -29,6 +29,7 @@ client.on('interactionCreate', async interaction => {
   if (!command) return
 
   try {
+    console.log(`${interaction.member.nickname} a utilisé ${interaction.commandName}.`)
     await command.execute(interaction)
   } catch (error) {
     console.error(error)
