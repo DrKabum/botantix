@@ -1,6 +1,8 @@
 require('dotenv').config()
 const { Client } = require('@notionhq/client')
 
+const { today } = require('../utils/date-helpers')
+
 const { NOTION_API_KEY, NOTION_PLAYER_DB_ID, NOTION_SCORE_DB_ID } = process.env
 
 const notion = new Client({ auth: NOTION_API_KEY })
@@ -96,7 +98,7 @@ async function addScore(player, { game, tries, position }) {
       },
       "Date": {
         date: {
-          start: new Date()
+          start: today()
         }
       }
     }
