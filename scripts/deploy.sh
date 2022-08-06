@@ -1,5 +1,4 @@
 #!/usr/bin/bash
 
-npm i -g forever
-
-forever start index.js
+git pull
+forever restart index.js
