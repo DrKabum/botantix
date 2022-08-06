@@ -107,9 +107,69 @@ async function addScore(player, { game, tries, position }) {
   return response
 }
 
+async function getRankings(game = null) {
+  const players = await getAllPlayers()
+
+  // get all scores for each player
+  const scores = await Promise.all(players.map(player => getScoreFor(player.id, game)))
+
+  scores.forEach((score, i) => players[i].score = score)
+
+  return players.sort((a, b) => b.score - a.score)
+}
+
+async function getAllPlayers() {
+  // get all players IDs
+  const playerQuery = {
+    database_id: NOTION_PLAYER_DB_ID
+  }
+  const playerResponse = await notion.databases.query(playerQuery)
+  const playerNames = await Promise.all(playerResponse.results.map(res => notion.pages.properties.retrieve({page_id: res.id, property_id: res.properties["Nom"].id})))
+  const playerIds = playerResponse.results.map(res => res.id)
+  const output = []
+
+  for (let i = 0; i < playerIds.length; i++) {
+    output.push({
+      name: playerNames[i].results[0].title.plain_text,
+      id: playerIds[i]
+    })
+  }
+
+  return output
+}
+
+async function getScoreFor(playerId, game) {
+  const scoreQuery = {
+    database_id: NOTION_SCORE_DB_ID,
+    filter: {
+      and: [
+        {
+          property: 'Joueur',
+          relation: {
+            contains: playerId
+          }
+        }
+      ]
+    }
+  }
+
+  if (game !== null) scoreQuery.filter.and.push({
+    property: 'Tags',
+    select: {
+      equals: game
+    }
+  })
+
+  const scoreResponse = await notion.databases.query(scoreQuery)
+  const points = await Promise.all(scoreResponse.results.map(res => notion.pages.properties.retrieve({page_id: res.id, property_id: res.properties["Points (test)"].id})))
+
+  return points.reduce((acc, current) => acc + current.formula.number, 0)
+}
+
 module.exports = {
   getDatabase,
   getPlayer,
   createPlayer,
-  addScore
+  addScore,
+  getRankings
 }
