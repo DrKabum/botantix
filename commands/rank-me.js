@@ -1,6 +1,7 @@
 require('dotenv').config()
-const { SlashCommandBuilder } = require('discord.js')
-const { execute } = require('./score-me')
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
+
+const { getRankings } = require('../api/notion')
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -17,6 +18,14 @@ module.exports = {
         { name: 'Synoptix', value: 'Synoptix'}
       )),
   async execute(interaction) {
-    return
+    interaction.deferReply()
+    let game = interaction.options.getString('jeu')
+    if (game === 'global') game = null
+    const response = await getRankings(game)
+
+    let reply = '**Voici le classement du oLoL Kr3w:**'
+    reply += ` *${game === null ? 'Général' : game}*`
+    response.forEach((player, i) => reply += `\n**${i+1}e place**: ${player.name} avec ${player.score} points`)
+    interaction.editReply(reply)
   }
 }
