@@ -18,5 +18,4 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           script: |
             cd nico/botantix/
-            git pull
-            forever restart index.js
+            sh scripts/deploy.sh
