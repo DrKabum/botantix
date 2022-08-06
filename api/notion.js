@@ -115,7 +115,7 @@ async function getRankings(game = null) {
 
   scores.forEach((score, i) => players[i].score = score)
 
-  return players.sort((a, b) => b.score - a.score)
+  return players.filter(player => player.score > 0).sort((a, b) => b.score - a.score)
 }
 
 async function getAllPlayers() {

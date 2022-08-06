@@ -7,6 +7,7 @@ const { REST } = require('@discordjs/rest')
 const {
   DISCORD_APP_ID,
   DEV_GUILD_ID,
+	PROD_GUILD_ID,
   DISCORD_BOT_TOKEN
 } = process.env
 
@@ -22,6 +23,6 @@ for (const file of commandFiles) {
 
 const rest = new REST({ version: '10' }).setToken(DISCORD_BOT_TOKEN);
 
-rest.put(Routes.applicationGuildCommands(DISCORD_APP_ID, DEV_GUILD_ID), { body: commands })
+rest.put(Routes.applicationGuildCommands(DISCORD_APP_ID, PROD_GUILD_ID), { body: commands })
 	.then(() => console.log('Successfully registered application commands.'))
 	.catch(console.error);
