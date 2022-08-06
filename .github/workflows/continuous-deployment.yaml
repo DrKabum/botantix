@@ -17,5 +17,6 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           script: |
-            ls
-            echo coucou >> logfile
+            cd nico/botantix/
+            git pull
+            forever restart index.js
