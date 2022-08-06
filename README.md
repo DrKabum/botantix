@@ -10,3 +10,8 @@ Options are as follow:
 * Game `string: Pédantix|Cémantix|Synoptix`: The game you want to record a score of.
 * Tries `number`: the number of tries to find the work
 * Position `number`: your rank during that game
+
+## Improvements
+* add an internal scoring system to add more spices
+  * the less tries, the more points for instance
+* get list of words, if doesn't exist for the day, create placeholder page and add to the "solution" column (a little tricky, Pédantix changes at a different time)
