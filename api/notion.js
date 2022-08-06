@@ -8,8 +8,13 @@ const { NOTION_API_KEY, NOTION_PLAYER_DB_ID, NOTION_SCORE_DB_ID } = process.env
 const notion = new Client({ auth: NOTION_API_KEY })
 
 async function getDatabase(dbId) {
-  const response = await notion.databases.retrieve({database_id: NOTION_PLAYER_DB_ID})
+  const response = await notion.databases.retrieve({database_id: dbId})
   return response
+}
+
+async function getScoreDb() {
+  const response = await getDatabase(NOTION_SCORE_DB_ID)
+  return response.properties["Points (test)"].formula
 }
 
 async function getPlayer(discordTag) {
@@ -167,7 +172,7 @@ async function getScoreFor(playerId, game) {
 }
 
 module.exports = {
-  getDatabase,
+  getScoreDb,
   getPlayer,
   createPlayer,
   addScore,
