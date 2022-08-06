@@ -10,11 +10,12 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Connect to host
-        shell: bash
-        env:
-          HOST: ${{ secrets.host }}
-          HOSTPW: ${{ secrets.hostpw }}
-        run: |
-          sshpass -p "$HOSTPW" ssh "$HOST"
-          echo connected?
+      - name: execute deployment script on host
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          script: |
+            cd ~nico/botantix/
+            sh scripts/deploy.sh
