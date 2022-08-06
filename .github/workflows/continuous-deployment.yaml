@@ -18,3 +18,4 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           script: |
             ls
+            echo coucou >> logfile
