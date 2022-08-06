@@ -17,5 +17,4 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           script: |
-            cd nico/botantix/
-            sh scripts/deploy.sh
+            ls
