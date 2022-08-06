@@ -11,12 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: execute deployment script on host
-        uses: appleboy/ssh-action@master
+        uses: fifsky/ssh-action@master
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          script: |
+          command: |
             cd nico/botantix/
             git pull
-            /home/ubuntu/.nvm/versions/node/v18.7.0/lib/node_modules/forever/bin/forever restart index.js
+            forever restart index.js
+          host: ${{ secrets.HOST }}
+          user: ubuntu
+          pass: ${{ secrets.PASSWORD }}
