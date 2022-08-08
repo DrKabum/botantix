@@ -10,7 +10,7 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 // retrieve the commands
 client.commands = new Collection()
-const commandsPath = path.join(__dirname, 'commands')
+const commandsPath = path.join(__dirname, 'src', 'commands')
 const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'))
 
 for (const file of commandFiles) {
