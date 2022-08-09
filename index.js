@@ -69,11 +69,10 @@ client.once('ready', async c => {
     async () => thread.send(await getYesterdaysPage()), 
     {timezone: 'Europe/Paris'})
 
-  // TODO: make it work for movies as well...
-  // cron.schedule(
-  //   '*/5 * * * * *', 
-  //   async () => console.log(await getYesterdaysMovie()), 
-  //   {timezone: 'Europe/Paris'})
+  cron.schedule(
+    '1 0 * * *', 
+    async () => thread.send(await getYesterdaysMovie()), 
+    {timezone: 'Europe/Paris'})
 })
 
 // Login to Discord with your client's token

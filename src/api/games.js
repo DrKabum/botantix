@@ -36,13 +36,18 @@ async function getYesterdaysPage() {
   return `C'est l'heure de la nouvelle page Wikipedia du jour!\nLa page d'hier était **${page.title}** !\n${page.link}`
 }
 
-// it doesn't work for the movie website. I suspect it's entirely React
 async function getYesterdaysMovie() {
-  const $ = await getWebsite('https://synoptix.thunderkerrigan.fr/')
+  const { status, statusText, data } = await axios.get('https://synoptix.back.thunderkerrigan.fr/synoptix/stats/', {
+    headers: {
+      'Version': '1.1.3'
+    }
+  })
 
-  const film = $('#root > div > div > div > div > div > div > div > div > div > div > h6')[1].text()
+  if (status !== 200) throw `Error ${status}: ${statusText}`
 
-  return $('#root').toString()
+  const lastMovie = /<p>(.+)<\/p>/.exec(data[data.length - 1].title)[1]
+
+  return `C'est l'heure du nouveau film du jour!\nLe film d'hier était **${lastMovie}** !`
 }
 
 module.exports = {
