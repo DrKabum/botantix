@@ -1,0 +1,3 @@
+GET https://synoptix.back.thunderkerrigan.fr/synoptix/stats/ HTTP/1.1
+Accept: application/json
+Version: 1.1.3
