@@ -2,8 +2,15 @@ require('dotenv').config()
 const fs = require('node:fs')
 const path = require('node:path')
 const { Client, GatewayIntentBits, Collection } = require('discord.js')
+const cron = require('node-cron')
 
-const { DISCORD_BOT_TOKEN } = process.env
+const {
+  getYesterdaysWord,
+  getYesterdaysPage,
+  getYesterdaysMovie
+} = require('./src/api/games')
+
+const { DISCORD_BOT_TOKEN, CHANNEL_ID } = process.env
 
 // Create a new client instance
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
@@ -37,7 +44,38 @@ client.on('interactionCreate', async interaction => {
   }
 })
 
-client.once('ready', c => console.log(`Ready and logged in as ${c.user.tag}`))
+// Schedule notifications
+cron.schedule('1 0 * * *', async () => {
+  const word = await getYesterdaysWord()
+
+
+}, {timezone: 'Europe/Paris'})
+
+client.once('ready', async c => {
+  console.log(`Ready and logged in as ${c.user.tag}`)
+  // join thread
+  const channel = await client.channels.fetch(CHANNEL_ID)
+  const thread = channel.threads.cache.find(x => x.name === '📝 Cémantix');
+  if (thread.joinable) thread.join();
+
+  // schedule notifications
+  cron.schedule(
+    '1 0 * * *', 
+    async () => thread.send(await getYesterdaysWord()), 
+    {timezone: 'Europe/Paris'})
+
+  cron.schedule(
+    '1 12 * * *', 
+    async () => thread.send(await getYesterdaysPage()), 
+    {timezone: 'Europe/Paris'})
+
+  // TODO: make it work for movies as well...
+  // cron.schedule(
+  //   '*/5 * * * * *', 
+  //   async () => console.log(await getYesterdaysMovie()), 
+  //   {timezone: 'Europe/Paris'})
+})
 
 // Login to Discord with your client's token
 client.login(DISCORD_BOT_TOKEN);
+
