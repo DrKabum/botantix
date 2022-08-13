@@ -1,9 +1,13 @@
-function today() {
-  const date = new Date()
+const { zonedTimeToUtc, utcToZonedTime, format } = require('date-fns-tz')
 
-  return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`
+function today() {
+  const date = zonedTimeToUtc(new Date())
+  const formatedDate = format(utcToZonedTime(date, 'Europe/Paris'), 'yyyy-MM-dd HH:mm')
+
+  return formatedDate
 }
 
+today()
 module.exports = {
   today
 }
