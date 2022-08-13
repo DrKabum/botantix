@@ -37,7 +37,7 @@ module.exports = {
       player = playerQuery.results[0]
     }
 
-    const pointCalculation = Math.ceil(Math.exp(-0.01 * interaction.options.getInteger('coups') + 7) + 250)
+    const pointCalculation = Math.ceil((Math.exp(-0.01 * interaction.options.getInteger('coups') + 7) + 250)/10)
 
     const score = await addScore(player, {
       game: interaction.options.getString('jeu'),
