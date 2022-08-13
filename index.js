@@ -75,7 +75,7 @@ client.once('ready', async c => {
     {timezone: 'Europe/Paris'})
 
   // some one-time notifications...
-  thread.send(`🔫 🎇 🎉 Démarrage de la saison 1! La saison est prévue pour durer 1 mois. A la fin, seul les classements par catégorie seront pris en compte 🥇 🥈 🥉 (le général est pour le fun, les jeux ne sont pas équilibrés entres eux).\nGLHF!!`)
+  thread.send(`🔫 🎇 🎉 Démarrage de la saison 1! La saison est prévue pour durer 1 mois. A la fin, seul les classements par catégorie seront pris en compte 🥇 🥈 🥉 (le général est pour le fun, les jeux ne sont pas équilibrés entres eux).\nNouveau tableau des score : https://elderly-bloom-f4f.notion.site/00223ac4b34e4935be5d601f9bd6cb35\nGLHF!!`)
 })
 
 // Login to Discord with your client's token

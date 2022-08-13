@@ -45,6 +45,6 @@ module.exports = {
       position: interaction.options.getInteger('position')
     })
 
-    interaction.editReply(`🎉 ${interaction.user.username} a trouvé le ${interaction.options.getString('jeu')} du jour en ${interaction.options.getInteger('coups')} coups et est classé ${interaction.options.getInteger('position')}e! Ca lui fait ${pointCalculation} points!\nhttps://elderly-bloom-f4f.notion.site/508ada2b4c6c48d2bb0fd5f7be9a8105?v=1723a1dfe3b948d881df55122e2b6adb`)
+    interaction.editReply(`🎉 ${interaction.user.username} a trouvé le ${interaction.options.getString('jeu')} du jour en ${interaction.options.getInteger('coups')} coups et est classé ${interaction.options.getInteger('position')}e! Ca lui fait ${pointCalculation} points!\nhttps://elderly-bloom-f4f.notion.site/00223ac4b34e4935be5d601f9bd6cb35`)
   }
 }
