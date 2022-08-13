@@ -15,8 +15,10 @@ jobs:
         with:
           command: |
             cd nico/botantix/
+            forever stop index.js
             git pull
-            forever restart index.js
+            npm install
+            forever start index.js
           host: ${{ secrets.HOST }}
           user: ubuntu
           pass: ${{ secrets.PASSWORD }}
