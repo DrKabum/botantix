@@ -18,7 +18,7 @@ jobs:
             forever stop index.js
             git pull
             npm install
-            forever start index.js
+            
           host: ${{ secrets.HOST }}
           user: ubuntu
           pass: ${{ secrets.PASSWORD }}
