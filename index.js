@@ -73,6 +73,9 @@ client.once('ready', async c => {
     '1 0 * * *', 
     async () => thread.send(await getYesterdaysMovie()), 
     {timezone: 'Europe/Paris'})
+
+  // some one-time notifications...
+  thread.send(`🔫 🎇 🎉 Démarrage de la saison 1! La saison est prévue pour durer 1 mois. A la fin, seul les classements par catégorie seront pris en compte 🥇 🥈 🥉 (le général est pour le fun, les jeux ne sont pas équilibrés entres eux).\nGLHF!!`)
 })
 
 // Login to Discord with your client's token
