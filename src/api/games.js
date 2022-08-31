@@ -39,7 +39,7 @@ async function getYesterdaysPage() {
 async function getYesterdaysMovie() {
   const { status, statusText, data } = await axios.get('https://synoptix.back.thunderkerrigan.fr/synoptix/stats/', {
     headers: {
-      'Version': '1.2.0'
+      'Version': '1.2.1'
     }
   })
 
